@@ -131,5 +131,77 @@ export const worksData: Work[] = [
     duration: '03:42',
     ownerId: 'admin',
     createdAt: new Date(Date.now() - 86400000).toISOString()
+  },
+  {
+    id: '10',
+    title: '万科红树湾招商片',
+    category: '地产广告',
+    coverUrl: '',
+    videoUrl: 'https://www.bilibili.com/video/BV1DonGzsEM2/',
+    description: '主要负责剪辑和声音设计,参与脚本创意设计',
+    resolution: '4k',
+    duration: '04:53',
+    ownerId: 'admin',
+    createdAt: new Date(Date.now() - 86400000).toISOString()
+  },
+  {
+    id: '11',
+    title: '物联网',
+    category: 'MG动画',
+    coverUrl: '',
+    videoUrl: 'https://www.bilibili.com/video/BV1ZYnhzXEqe/',
+    description: '负责项目的整体把控,分镜设计以及与包装同事对接,自己剪辑和音效设计',
+    resolution: '4k',
+    duration: '01:39',
+    ownerId: 'admin',
+    createdAt: new Date(Date.now() - 86400000).toISOString()
+  },
+  {
+    id: '12',
+    title: '顺风内部app',
+    category: 'MG动画',
+    coverUrl: '',
+    videoUrl: 'https://www.bilibili.com/video/BV1FPEjeiEff/',
+    description: '负责项目的整体把控,分镜设计以及与平面同事对接,自己剪辑和音效设计',
+    resolution: '4k',
+    duration: '01:28',
+    ownerId: 'admin',
+    createdAt: new Date(Date.now() - 86400000).toISOString()
+  },
+  {
+    id: '13',
+    title: '华侨城新玺Demo',
+    category: 'MG动画',
+    coverUrl: '',
+    videoUrl: 'https://www.bilibili.com/video/BV1ovnhzHExC/',
+    description: '配合投标团队剪辑投标样片,并顺利拿下项目',
+    resolution: '4k',
+    duration: '01:27',
+    ownerId: 'admin',
+    createdAt: new Date(Date.now() - 86400000).toISOString()
+  },
+  {
+    id: '14',
+    title: '吸沉地垫',
+    category: '电商广告',
+    coverUrl: '',
+    videoUrl: 'https://www.bilibili.com/video/BV1RfDJB3ETC/',
+    description: '从分镜到拍摄,以及后期剪辑,独立完成全流程',
+    resolution: '4k',
+    duration: '00:23',
+    ownerId: 'admin',
+    createdAt: new Date(Date.now() - 86400000).toISOString()
+  },
+  {
+    id: '15',
+    title: '可口可乐',
+    category: 'Ai视频',
+    coverUrl: '',
+    videoUrl: 'https://www.bilibili.com/video/BV15fDJBGEde/',
+    description: '完全独立完成所有画面以及剪辑等工作',
+    resolution: '2k',
+    duration: '00:21',
+    ownerId: 'admin',
+    createdAt: new Date(Date.now() - 86400000).toISOString()
   }
 ];
