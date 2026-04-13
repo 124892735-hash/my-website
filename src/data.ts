@@ -173,7 +173,7 @@ export const worksData: Work[] = [
   {
     id: '13',
     title: '华侨城新玺Demo',
-    category: 'MG动画',
+    category: '地产广告',
     coverUrl: DEFAULT_COVER,
     videoUrl: 'https://www.bilibili.com/video/BV1ovnhzHExC/',
     description: '配合投标团队剪辑投标样片,并顺利拿下项目',
