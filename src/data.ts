@@ -203,5 +203,17 @@ export const worksData: Work[] = [
     duration: '00:21',
     ownerId: 'admin',
     createdAt: new Date(Date.now() - 86400000).toISOString()
-  }
+  },
+  {
+    id: '16',
+    title: '三合一充电器',
+    category: '电商广告',
+    coverUrl: '',
+    videoUrl: 'https://www.bilibili.com/video/BV1eozsBZEqT/',
+    description: '完全自主搜集产品素材,配合ai写文案,完成剪辑和声音制作',
+    resolution: '4k',
+    duration: '00:26',
+    ownerId: 'admin',
+    createdAt: new Date(Date.now() - 86400000).toISOString()
+  },
 ];
