@@ -1,0 +1,99 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: works
+    // Document ID: auto-generated
+    // Fields:
+    //   - title: string (required, max 100 chars)
+    //   - category: string (required, enum: ["故事片", "企业宣传片", "TVC广告", "地产广告", "电商广告", "MG动画", "Ai视频"])
+    //   - coverUrl: string (required, valid URL)
+    //   - videoUrl: string (optional, valid URL or empty)
+    //   - description: string (optional, max 2000 chars)
+    //   - resolution: string (optional, max 50 chars)
+    //   - duration: string (optional, max 50 chars)
+    //   - createdAt: timestamp (required, immutable)
+    //   - ownerId: string (required, immutable, must match auth.uid)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isDocOwner() {
+      return isAuthenticated() && request.auth.uid == resource.data.ownerId;
+    }
+    
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+    
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+    
+    function validStringLength(field, minLen, maxLen) {
+      return request.resource.data[field] is string &&
+        request.resource.data[field].size() >= minLen &&
+        request.resource.data[field].size() <= maxLen;
+    }
+    
+    function isValidUrl(url) {
+      return url is string && (url == "" || url.matches("^https?://.*"));
+    }
+
+    function isValidCategory(category) {
+      return category in ["故事片", "企业宣传片", "TVC广告", "地产广告", "电商广告", "MG动画", "Ai视频"];
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+    
+    function isValidWork(data) {
+      return hasOnlyAllowedFields(['title', 'category', 'coverUrl', 'videoUrl', 'description', 'resolution', 'duration', 'createdAt', 'ownerId']) &&
+             hasRequiredFields(['title', 'category', 'coverUrl', 'createdAt', 'ownerId']) &&
+             validStringLength('title', 1, 100) &&
+             isValidCategory(data.category) &&
+             isValidUrl(data.coverUrl) &&
+             (!('videoUrl' in data) || isValidUrl(data.videoUrl)) &&
+             (!('description' in data) || validStringLength('description', 0, 2000)) &&
+             (!('resolution' in data) || validStringLength('resolution', 0, 50)) &&
+             (!('duration' in data) || validStringLength('duration', 0, 50)) &&
+             data.createdAt is timestamp;
+    }
+
+    match /works/{workId} {
+      // Anyone can read the portfolio works
+      allow read: if true;
+      
+      // Only authenticated users can create their own works
+      allow create: if isAuthenticated() && 
+                    isValidWork(request.resource.data) && 
+                    request.resource.data.ownerId == request.auth.uid;
+                    
+      // Only the owner can update their works, and ownerId/createdAt must be immutable
+      allow update: if isDocOwner() && 
+                    isValidWork(request.resource.data) &&
+                    request.resource.data.ownerId == resource.data.ownerId &&
+                    request.resource.data.createdAt == resource.data.createdAt;
+                    
+      // Only the owner can delete their works
+      allow delete: if isDocOwner();
+    }
+  }
+}

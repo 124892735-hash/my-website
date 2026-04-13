@@ -1,0 +1,49 @@
+{
+  "entities": {
+    "Work": {
+      "title": "Work",
+      "description": "A portfolio work entry",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title of the work"
+        },
+        "category": {
+          "type": "string",
+          "description": "Category of the work",
+          "enum": ["故事片", "企业宣传片", "TVC广告", "地产广告", "电商广告", "MG动画"]
+        },
+        "coverUrl": {
+          "type": "string",
+          "description": "URL of the cover image"
+        },
+        "videoUrl": {
+          "type": "string",
+          "description": "URL of the video (optional)"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description or notes about the work"
+        },
+        "createdAt": {
+          "type": "timestamp",
+          "description": "When the work was added"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "User ID of the owner"
+        }
+      },
+      "required": ["title", "category", "coverUrl", "createdAt", "ownerId"]
+    }
+  },
+  "firestore": {
+    "/works/{workId}": {
+      "schema": {
+        "$ref": "#/entities/Work"
+      },
+      "description": "Collection of portfolio works"
+    }
+  }
+}
