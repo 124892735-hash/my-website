@@ -28,8 +28,8 @@ export const worksData: Work[] = [
     title: '共和国没有开闸',
     category: '故事片',
     // 新片场不支持纯净嵌入，所以我帮你配了一张默认封面。点击会直接在新标签页打开高清原片。
-    coverUrl: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2659&auto=format&fit=crop', 
-    videoUrl: 'https://www.xinpianchang.com/a12569641?searchKw=%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B2%A1%E6%9C%89%E5%BC%80%E9%97%B8&from=search_post',
+    coverUrl: '', 
+    videoUrl: 'https://www.bilibili.com/video/BV1F8nhzdEtL/',
     description: '主要负责剪辑和声音设计,参与前期脚本创意和部分镜头创意',
     resolution: '4K',
     duration: '11:22',
