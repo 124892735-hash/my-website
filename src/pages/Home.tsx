@@ -10,13 +10,13 @@ const getEmbedInfo = (url: string) => {
   // Bilibili
   const bvidMatch = url.match(/(BV[a-zA-Z0-9]+)/);
   if (bvidMatch) {
-    // 默认 autoplay=0，防止一打开网页全部视频一起播放
-    return { type: 'bilibili', src: `https://player.bilibili.com/player.html?bvid=${bvidMatch[1]}&page=1&high_quality=1&danmaku=0&autoplay=0` };
+    // 默认 autoplay=1，因为我们现在是点击后才加载 iframe
+    return { type: 'bilibili', src: `https://player.bilibili.com/player.html?bvid=${bvidMatch[1]}&page=1&high_quality=1&danmaku=0&autoplay=1` };
   }
   // YouTube
   const ytMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
   if (ytMatch) {
-    return { type: 'youtube', src: `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=0` };
+    return { type: 'youtube', src: `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1` };
   }
   // 新片场官方不支持纯净的 iframe 嵌入（会强制显示整个网页），所以这里我们不把它当做 embed 处理，
   // 而是让它走默认的“在新标签页打开”逻辑。
@@ -127,19 +127,19 @@ export default function Home() {
                     onMouseEnter={() => setHoveredWork(work.id)}
                     onMouseLeave={() => setHoveredWork(null)}
                     onClick={(e) => {
-                      if (embedInfo && !isPlaying && work.coverUrl) {
+                      if (embedInfo && !isPlaying) {
                         e.preventDefault();
                         setPlayingId(work.id);
                       }
                     }}
                   >
                     <div className="relative aspect-[16/9] overflow-hidden bg-[#111] mb-6 rounded-lg">
-                      {(isPlaying && embedInfo) || (!work.coverUrl && embedInfo) ? (
+                      {isPlaying && embedInfo ? (
                         embedInfo.type === 'direct' ? (
-                          <video src={embedInfo.src} controls autoPlay={isPlaying} className="w-full h-full object-cover" />
+                          <video src={embedInfo.src} controls autoPlay className="w-full h-full object-cover" />
                         ) : (
                           <iframe 
-                            src={isPlaying ? embedInfo.src.replace('autoplay=0', 'autoplay=1') : embedInfo.src} 
+                            src={embedInfo.src} 
                             className="w-full h-full border-0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowFullScreen 
@@ -152,19 +152,19 @@ export default function Home() {
                             <img 
                               src={work.coverUrl} 
                               alt={work.title} 
-                              className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                               referrerPolicy="no-referrer"
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center text-zinc-600 bg-zinc-900">
+                            <div className="w-full h-full flex items-center justify-center text-zinc-600 bg-zinc-900 transition-transform duration-1000 group-hover:scale-105">
                               <Film className="w-12 h-12 opacity-20" />
                             </div>
                           )}
                           
-                          {/* Hover Overlay */}
-                          <div className={`absolute inset-0 bg-black/40 transition-opacity duration-500 flex items-center justify-center ${hoveredWork === work.id ? 'opacity-100' : 'opacity-0'}`}>
-                            <div className="w-20 h-20 rounded-full border border-white/30 flex items-center justify-center backdrop-blur-sm transform transition-transform duration-500 scale-90 group-hover:scale-100">
-                              <Play className="w-6 h-6 text-white ml-1" />
+                          {/* Always visible Play Button Overlay */}
+                          <div className="absolute inset-0 bg-black/20 transition-opacity duration-500 flex items-center justify-center group-hover:bg-black/40">
+                            <div className="w-16 h-16 rounded-full bg-black/40 border border-white/30 flex items-center justify-center backdrop-blur-sm transform transition-all duration-500 group-hover:scale-110 group-hover:bg-[#F27D26] group-hover:border-[#F27D26] shadow-lg">
+                              <Play className="w-6 h-6 text-white ml-1" fill="currentColor" />
                             </div>
                           </div>
                         </>
