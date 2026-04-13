@@ -27,9 +27,9 @@ export const worksData: Work[] = [
     id: '1',
     title: '共和国没有开闸',
     category: '故事片',
-    // 如果你不想自己找封面，直接把 coverUrl 删掉或者留空，网页会自动显示B站的播放器！
-    coverUrl: '', 
-    videoUrl: 'https://www.xinpianchang.com/a12569641?searchKw=%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B2%A1%E6%9C%89%E5%BC%80%E9%97%B8&from=search_post', // 支持B站、YouTube或MP4直链
+    // 新片场不支持纯净嵌入，所以我帮你配了一张默认封面。点击会直接在新标签页打开高清原片。
+    coverUrl: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2659&auto=format&fit=crop', 
+    videoUrl: 'https://www.xinpianchang.com/a12569641?searchKw=%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B2%A1%E6%9C%89%E5%BC%80%E9%97%B8&from=search_post',
     description: '主要负责剪辑和声音设计,参与前期脚本创意和部分镜头创意',
     resolution: '4K',
     duration: '11:22',
@@ -46,7 +46,7 @@ export const worksData: Work[] = [
     resolution: '4k',
     duration: '06:02',
     ownerId: 'admin',
-    createdAt: new Date(Date.now() - 86400000).toISOString() // 昨天的日期
+    createdAt: new Date(Date.now() - 86400000).toISOString()
   },
   {
     id: '3',
@@ -58,7 +58,7 @@ export const worksData: Work[] = [
     resolution: '4k',
     duration: '03:38',
     ownerId: 'admin',
-    createdAt: new Date(Date.now() - 86400000).toISOString() // 昨天的日期
+    createdAt: new Date(Date.now() - 86400000).toISOString()
   },
   {
     id: '4',
@@ -70,7 +70,7 @@ export const worksData: Work[] = [
     resolution: '4k',
     duration: '02:10',
     ownerId: 'admin',
-    createdAt: new Date(Date.now() - 86400000).toISOString() // 昨天的日期
+    createdAt: new Date(Date.now() - 86400000).toISOString()
   },
   {
     id: '5',
@@ -82,7 +82,7 @@ export const worksData: Work[] = [
     resolution: '4k',
     duration: '03:26',
     ownerId: 'admin',
-    createdAt: new Date(Date.now() - 86400000).toISOString() // 昨天的日期
+    createdAt: new Date(Date.now() - 86400000).toISOString()
   },
   {
     id: '6',
@@ -94,7 +94,7 @@ export const worksData: Work[] = [
     resolution: '4k',
     duration: '03:05',
     ownerId: 'admin',
-    createdAt: new Date(Date.now() - 86400000).toISOString() // 昨天的日期
+    createdAt: new Date(Date.now() - 86400000).toISOString()
   },
   {
     id: '7',
@@ -106,7 +106,7 @@ export const worksData: Work[] = [
     resolution: '4k',
     duration: '02:22',
     ownerId: 'admin',
-    createdAt: new Date(Date.now() - 86400000).toISOString() // 昨天的日期
+    createdAt: new Date(Date.now() - 86400000).toISOString()
   },
   {
     id: '8',
@@ -118,7 +118,7 @@ export const worksData: Work[] = [
     resolution: '4k',
     duration: '01:49',
     ownerId: 'admin',
-    createdAt: new Date(Date.now() - 86400000).toISOString() // 昨天的日期
+    createdAt: new Date(Date.now() - 86400000).toISOString()
   },
   {
     id: '9',
@@ -130,6 +130,6 @@ export const worksData: Work[] = [
     resolution: '4k',
     duration: '03:42',
     ownerId: 'admin',
-    createdAt: new Date(Date.now() - 86400000).toISOString() // 昨天的日期
+    createdAt: new Date(Date.now() - 86400000).toISOString()
   }
 ];

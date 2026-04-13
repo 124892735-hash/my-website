@@ -10,24 +10,17 @@ const getEmbedInfo = (url: string) => {
   // Bilibili
   const bvidMatch = url.match(/(BV[a-zA-Z0-9]+)/);
   if (bvidMatch) {
-    return { type: 'bilibili', src: `https://player.bilibili.com/player.html?bvid=${bvidMatch[1]}&page=1&high_quality=1&danmaku=0&autoplay=1` };
+    // 默认 autoplay=0，防止一打开网页全部视频一起播放
+    return { type: 'bilibili', src: `https://player.bilibili.com/player.html?bvid=${bvidMatch[1]}&page=1&high_quality=1&danmaku=0&autoplay=0` };
   }
   // YouTube
   const ytMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
   if (ytMatch) {
-    return { type: 'youtube', src: `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1` };
+    return { type: 'youtube', src: `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=0` };
   }
-  // 新片场 (Xinpianchang)
-  // 匹配形如 https://www.xinpianchang.com/a11977714 的链接
-  const xpcMatch = url.match(/xinpianchang\.com\/a(\d+)/);
-  if (xpcMatch) {
-    return { type: 'xinpianchang', src: `https://www.xinpianchang.com/embed/video/${xpcMatch[1]}?autoplay=1` };
-  }
-  // 如果用户直接粘贴了新片场的 iframe src (包含 embed/video)
-  const xpcEmbedMatch = url.match(/xinpianchang\.com\/embed\/video\/(\d+)/);
-  if (xpcEmbedMatch) {
-    return { type: 'xinpianchang', src: `https://www.xinpianchang.com/embed/video/${xpcEmbedMatch[1]}?autoplay=1` };
-  }
+  // 新片场官方不支持纯净的 iframe 嵌入（会强制显示整个网页），所以这里我们不把它当做 embed 处理，
+  // 而是让它走默认的“在新标签页打开”逻辑。
+  
   // Direct MP4
   if (url.endsWith('.mp4') || url.endsWith('.webm')) {
     return { type: 'direct', src: url };
@@ -146,7 +139,7 @@ export default function Home() {
                           <video src={embedInfo.src} controls autoPlay={isPlaying} className="w-full h-full object-cover" />
                         ) : (
                           <iframe 
-                            src={embedInfo.src.replace('&autoplay=1', '')} // 如果直接显示，不要自动播放
+                            src={isPlaying ? embedInfo.src.replace('autoplay=0', 'autoplay=1') : embedInfo.src} 
                             className="w-full h-full border-0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowFullScreen 
