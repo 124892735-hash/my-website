@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { worksData } from '../data';
 import { Work, Category } from '../types';
-import { Play, ArrowUpRight, Loader2 } from 'lucide-react';
+import { Play, ArrowUpRight, Loader2, Film } from 'lucide-react';
 
 const CATEGORIES: ('全部' | Category)[] = ['全部', '故事片', '企业宣传片', 'TVC广告', '地产广告', '电商广告', 'MG动画', 'Ai视频'];
 
@@ -123,19 +123,19 @@ export default function Home() {
                     onMouseEnter={() => setHoveredWork(work.id)}
                     onMouseLeave={() => setHoveredWork(null)}
                     onClick={(e) => {
-                      if (embedInfo && !isPlaying) {
+                      if (embedInfo && !isPlaying && work.coverUrl) {
                         e.preventDefault();
                         setPlayingId(work.id);
                       }
                     }}
                   >
                     <div className="relative aspect-[16/9] overflow-hidden bg-[#111] mb-6 rounded-lg">
-                      {isPlaying && embedInfo ? (
+                      {(isPlaying && embedInfo) || (!work.coverUrl && embedInfo) ? (
                         embedInfo.type === 'direct' ? (
-                          <video src={embedInfo.src} controls autoPlay className="w-full h-full object-cover" />
+                          <video src={embedInfo.src} controls autoPlay={isPlaying} className="w-full h-full object-cover" />
                         ) : (
                           <iframe 
-                            src={embedInfo.src} 
+                            src={embedInfo.src.replace('&autoplay=1', '')} // 如果直接显示，不要自动播放
                             className="w-full h-full border-0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowFullScreen 
@@ -144,12 +144,18 @@ export default function Home() {
                         )
                       ) : (
                         <>
-                          <img 
-                            src={work.coverUrl} 
-                            alt={work.title} 
-                            className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-105 opacity-90 group-hover:opacity-100"
-                            referrerPolicy="no-referrer"
-                          />
+                          {work.coverUrl ? (
+                            <img 
+                              src={work.coverUrl} 
+                              alt={work.title} 
+                              className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                              referrerPolicy="no-referrer"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-zinc-600 bg-zinc-900">
+                              <Film className="w-12 h-12 opacity-20" />
+                            </div>
+                          )}
                           
                           {/* Hover Overlay */}
                           <div className={`absolute inset-0 bg-black/40 transition-opacity duration-500 flex items-center justify-center ${hoveredWork === work.id ? 'opacity-100' : 'opacity-0'}`}>

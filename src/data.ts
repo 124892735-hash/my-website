@@ -7,9 +7,10 @@ export const worksData: Work[] = [
     id: '1',
     title: '我的第一支TVC广告',
     category: 'TVC广告',
-    coverUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop',
+    // 如果你不想自己找封面，直接把 coverUrl 删掉或者留空，网页会自动显示B站的播放器！
+    coverUrl: '', 
     videoUrl: 'https://www.bilibili.com/video/BV1GJ411x7h7', // 支持B站、YouTube或MP4直链
-    description: '这是我的第一个示例作品，展示了出色的视觉效果。',
+    description: '这是我的第一个示例作品，因为没有填封面，所以直接显示了B站播放器。',
     resolution: '4K',
     duration: '01:30',
     ownerId: 'admin',
