@@ -14,8 +14,8 @@ export const profileData = {
   email: "124892735@qq.com"
 };
 
-// 统一的专业封面图（深色极简风格，适合展示专业剪辑师的综合实力）
-const DEFAULT_COVER = 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=2794&auto=format&fit=crop';
+// 统一的专业封面图（带有美感设计感的抽象暗调流体/光影背景）
+const DEFAULT_COVER = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop';
 
 // ==========================================
 // 2. 作品列表设置
