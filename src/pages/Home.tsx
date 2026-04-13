@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { worksData } from '../data';
+import { worksData, profileData } from '../data';
 import { Work, Category } from '../types';
 import { Play, ArrowUpRight, Loader2, Film } from 'lucide-react';
 
@@ -56,15 +56,15 @@ export default function Home() {
         {/* Hero Section - Editorial Style */}
         <div className="pt-40 pb-20 md:pt-56 md:pb-32">
           <div className="max-w-[1400px] mx-auto">
-            <p className="text-[#F27D26] text-xs font-bold tracking-[0.2em] uppercase mb-6">梁静 (Silva) / 专业剪辑师</p>
+            <p className="text-[#F27D26] text-xs font-bold tracking-[0.2em] uppercase mb-6">{profileData.name} / {profileData.title}</p>
             <h1 className="font-['Anton'] text-[15vw] md:text-[12vw] leading-[0.85] tracking-[-0.02em] uppercase m-0 p-0">
-              Visual<br />
-              <span className="text-zinc-600">Narrative.</span>
+              {profileData.heroTitleLine1}<br />
+              <span className="text-zinc-600">{profileData.heroTitleLine2}</span>
             </h1>
             <div className="mt-12 md:mt-24 grid grid-cols-1 md:grid-cols-12 gap-8">
               <div className="md:col-span-4 md:col-start-9">
                 <p className="text-sm text-zinc-400 leading-relaxed font-light">
-                  创意视觉叙事。涵盖故事片、TVC、企业宣传片等多元领域，用镜头捕捉真实，用光影传递情感，精准传达核心价值观。
+                  {profileData.description}
                 </p>
               </div>
             </div>
@@ -209,12 +209,12 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="bg-[#111] p-6 rounded-2xl border border-zinc-800/50">
                 <h3 className="text-[#F27D26] text-xs font-bold tracking-[0.2em] uppercase mb-2">电话联系</h3>
-                <p className="text-2xl font-light text-white">185-0301-5519</p>
+                <p className="text-2xl font-light text-white">{profileData.phone}</p>
                 <p className="text-xs text-zinc-600 mt-2">工作日 全天 可接听</p>
               </div>
               <div className="bg-[#111] p-6 rounded-2xl border border-zinc-800/50">
                 <h3 className="text-[#F27D26] text-xs font-bold tracking-[0.2em] uppercase mb-2">邮箱联系</h3>
-                <p className="text-xl font-light text-white break-all">124892735@qq.com</p>
+                <p className="text-xl font-light text-white break-all">{profileData.email}</p>
               </div>
             </div>
           </div>
@@ -225,10 +225,10 @@ export default function Home() {
       <footer className="border-t border-zinc-900 py-12 px-6 md:px-12">
         <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <p className="text-zinc-600 text-xs tracking-widest uppercase">
-            © {new Date().getFullYear()} 梁静 (Silva) Portfolio
+            © {new Date().getFullYear()} {profileData.name} Portfolio
           </p>
-          <a href="/login" className="text-zinc-600 hover:text-white text-xs tracking-widest uppercase transition-colors">
-            Admin Portal
+          <a href="#" className="text-zinc-600 hover:text-white text-xs tracking-widest uppercase transition-colors">
+            Back to top
           </a>
         </div>
       </footer>
