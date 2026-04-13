@@ -17,6 +17,17 @@ const getEmbedInfo = (url: string) => {
   if (ytMatch) {
     return { type: 'youtube', src: `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1` };
   }
+  // 新片场 (Xinpianchang)
+  // 匹配形如 https://www.xinpianchang.com/a11977714 的链接
+  const xpcMatch = url.match(/xinpianchang\.com\/a(\d+)/);
+  if (xpcMatch) {
+    return { type: 'xinpianchang', src: `https://www.xinpianchang.com/embed/video/${xpcMatch[1]}?autoplay=1` };
+  }
+  // 如果用户直接粘贴了新片场的 iframe src (包含 embed/video)
+  const xpcEmbedMatch = url.match(/xinpianchang\.com\/embed\/video\/(\d+)/);
+  if (xpcEmbedMatch) {
+    return { type: 'xinpianchang', src: `https://www.xinpianchang.com/embed/video/${xpcEmbedMatch[1]}?autoplay=1` };
+  }
   // Direct MP4
   if (url.endsWith('.mp4') || url.endsWith('.webm')) {
     return { type: 'direct', src: url };
