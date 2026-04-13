@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../supabase';
+import { worksData } from '../data';
 import { Work, Category } from '../types';
 import { Play, ArrowUpRight, Loader2 } from 'lucide-react';
 
@@ -32,45 +32,9 @@ export default function Home() {
   const [playingId, setPlayingId] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchWorks = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('works')
-          .select('*')
-          .order('created_at', { ascending: false });
-        
-        if (error) throw error;
-        
-        // Map created_at to createdAt for frontend compatibility
-        const mappedWorks = (data || []).map(item => ({
-          ...item,
-          createdAt: item.created_at,
-          ownerId: item.owner_id,
-          coverUrl: item.cover_url,
-          videoUrl: item.video_url
-        }));
-        
-        setWorks(mappedWorks as Work[]);
-      } catch (err) {
-        console.error('Error fetching works:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchWorks();
-
-    // Subscribe to realtime changes
-    const channel = supabase
-      .channel('works_changes')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'works' }, () => {
-        fetchWorks();
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
+    // Load from static data
+    setWorks(worksData);
+    setLoading(false);
   }, []);
 
   const filteredWorks = activeCategory === '全部' 
